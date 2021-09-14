@@ -3,7 +3,7 @@ import {Link, useHistory} from "react-router-dom";
 import logo from '../../images/logo.svg';
 import AuthService from "../../service/AuthService";
 
-const Navbar = ({ homePosition }) => {
+const Navbar = ({homePosition }) => {
     const history = useHistory();
     const [position, setPosition] = useState("static")
     const [stickyColor, setStickyColor] = useState("rgba(0, 0, 255, 0.534)")
@@ -28,7 +28,7 @@ const Navbar = ({ homePosition }) => {
             else {
                 setPosition("static")
             }
-            // setStickyColor(color)
+            setStickyColor("rgba(0, 0, 255, 0.534)")
             setStickyBorder("transparent")
         }
     }
@@ -54,6 +54,7 @@ const Navbar = ({ homePosition }) => {
                 AuthService.getCurrentUser() ? (
                     <ul>
                         <li><Link to="/profile">Company</Link></li>
+                        <li><Link to="/dashboard">Dashboard</Link></li>
                         <li><Link onClick={logout}>Logout</Link></li>
                     </ul>
                 ) : (

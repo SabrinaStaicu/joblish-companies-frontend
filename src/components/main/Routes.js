@@ -7,6 +7,7 @@ import Settings from '../dashboard/Settings';
 import ApplicantsList from '../dashboard/ApplicantsList';
 import Login from "../auth/Login";
 import Register from "../auth/Register";
+import EditJob from '../dashboard/EditJob';
 
 
 const Routes = () => {
@@ -20,6 +21,7 @@ const Routes = () => {
                     <Route path={"/company-applicants"} component={ApplicantsList} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
+                    <Route path="/edit-job" component={EditJob}/>
                 </Switch>
             </Router>
             <Footer/>

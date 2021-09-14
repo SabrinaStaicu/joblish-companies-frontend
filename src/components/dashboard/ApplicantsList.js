@@ -75,7 +75,7 @@ const ApplicantsList = ({ customers, ...rest }) => {
 
   return (
       <>
-    <Navbar />
+    <Navbar  />
     <div style={{display:"flex", flexDirection:"row"}}>
         <SideBar/>
         <div className="main-body">
@@ -106,7 +106,7 @@ const ApplicantsList = ({ customers, ...rest }) => {
         </CardContent>
       </Card>
     </Box>
-    
+
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>

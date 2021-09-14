@@ -6,6 +6,7 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import ApplicantsList from './ApplicantsList';
 import Modal from 'react-modal';
 import Button from "@material-ui/core/Button";
+import {useHistory} from "react-router-dom";
 
 
 import moment from 'moment';
@@ -26,7 +27,9 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import DashboardService from '../../service/DashboardService';
+import EditJob from './EditJob';
 
+Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
 
     
@@ -91,6 +94,15 @@ const Dashboard = (...rest) => {
     setPage(newPage);
   };
 
+  const history = useHistory();
+
+  const editJob = (job) => {
+    history.push({
+        pathname: `/edit-job`,
+        state: {job: job}
+    })
+  }
+
 
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -117,7 +129,7 @@ const Dashboard = (...rest) => {
 
     return (
         <>
-        <Navbar />
+        <Navbar  />
         {/* <div className="jobsTop">
                     <h1 style={{color:"white"}}>User profile</h1>
                 </div> */}
@@ -160,6 +172,9 @@ const Dashboard = (...rest) => {
                 </TableCell>
                 <TableCell>
                   Listed date
+                </TableCell>
+                <TableCell>
+                  Edit
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -209,6 +224,11 @@ const Dashboard = (...rest) => {
                   </TableCell>
                   <TableCell>
                     {moment("11/09/2021").format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell>
+                    <div class="col-auto">
+                        <label onClick={() =>{editJob(job)}} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">Edit</label>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -283,7 +303,7 @@ const Dashboard = (...rest) => {
                                                     <h5 class="m-0">Edit jobs</h5>
                                                 </div>
                                                 <div onClick={openModal} class="col-auto">
-                                                    <label class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
+                                                    <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
                                                 </div>
                                             </div>
                                             {/* <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">Jobs listed</sub></h2> */}
@@ -315,7 +335,7 @@ const Dashboard = (...rest) => {
                                                 <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
                                             </tr> )
                                             ) : (
-                                                <h3 style={{marginLeft:"15%"}}>No results found for your search.</h3>
+                                                <h3 style={{marginLeft:"15%"}}>No applicants found.</h3>
                                             )}
                                         </tbody>
                                     </table>
@@ -331,8 +351,8 @@ const Dashboard = (...rest) => {
                                                 <div class="col">
                                                     <h5 class="m-0">List new job</h5>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <label class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
+                                                <div class="col-auto" >
+                                                    <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
                                                 </div>
                                             </div>
                                             <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">Jobs listed</sub></h2>
