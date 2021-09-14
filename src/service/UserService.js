@@ -7,6 +7,10 @@ class UserService {
     getAllUsers() {
         return axios.get(`${USERS_API_URL}/all`, {headers: AuthHeader()})
     }
+
+    searchUsersByName(searchInput) {
+        return axios.get(`${USERS_API_URL}/search-user/${searchInput}`, {headers: AuthHeader()})
+    }
 }
 
 export default new UserService;
