@@ -3,17 +3,17 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import { NavLink, useLocation } from "react-router-dom";
+import {NavLink, useHistory, useLocation} from "react-router-dom";
 import { useState } from 'react';
 import logo from '../../images/logo.svg';
+import AuthService from "../../service/AuthService";
 
 const SideBar = () => {
-
+    const history = useHistory();
     const [size, setSize] = useState("70px")
-
     const location = useLocation();
-
     const { pathname } = location;
+    const splitLocation = pathname.split("/");
 
     const handleSizeUp = () => {
         setSize("300px")
@@ -23,8 +23,10 @@ const SideBar = () => {
         setSize("70px")
     }
 
-    const splitLocation = pathname.split("/");
-    console.log(splitLocation)
+    const logout = () => {
+        AuthService.logout();
+        history.push("/login")
+    }
 
     return (
         <div className="navigation" onMouseEnter={handleSizeUp} onMouseLeave={handleSizeDown} style={{width:"" + size}}>
@@ -53,7 +55,7 @@ const SideBar = () => {
                     </NavLink>
                 </li>
                 <li className={splitLocation[1] === "logout" ? "list active" : "list"}>
-                    <NavLink to="#">
+                    <NavLink to="#" onClick={logout}>
                         <span className="icon"><ExitToAppOutlinedIcon fontSize="large"/></span>
                         <span className="title">Logout</span>
                     </NavLink>

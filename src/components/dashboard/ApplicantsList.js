@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -23,27 +23,33 @@ import {
   SvgIcon
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
+import UserService from "../../service/UserService";
 
 const ApplicantsList = ({ customers, ...rest }) => {
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
+  // const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  // const [limit, setLimit] = useState(10);
+  // const [page, setPage] = useState(0);
+  const [users, setUsers] = useState([]);
 
-  const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+  useEffect(() => {
+    UserService.getAllUsers().then(res => setUsers(res.data))
+  }, [])
 
-    const customerMock = [{
-        "id":"3"
-    }]
-
-    if (event.target.checked) {
-      newSelectedCustomerIds = customerMock.map((customer) => customer.id);
-    } else {
-      newSelectedCustomerIds = [];
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
+  // const handleSelectAll = (event) => {
+  //   let newSelectedCustomerIds;
+  //
+  //   const customerMock = [{
+  //       "id":"3"
+  //   }]
+  //
+  //   if (event.target.checked) {
+  //     newSelectedCustomerIds = customerMock.map((customer) => customer.id);
+  //   } else {
+  //     newSelectedCustomerIds = [];
+  //   }
+  //
+  //   setSelectedCustomerIds(newSelectedCustomerIds);
+  // };
 
 //   const handleSelectOne = (event, id) => {
 //     const selectedIndex = selectedCustomerIds.indexOf(id);
@@ -112,17 +118,6 @@ const ApplicantsList = ({ customers, ...rest }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === 1}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < 2
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
                 <TableCell>
                   Name
                 </TableCell>
@@ -136,210 +131,69 @@ const ApplicantsList = ({ customers, ...rest }) => {
                   Phone
                 </TableCell>
                 <TableCell>
-                  Registration date
+                  Looking for job
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {customerMock.slice(0, limit).map((customer) => ( */}
-                <TableRow
-                  hover
-                  key={3}
-                  selected={selectedCustomerIds.indexOf(0) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(0) !== -1} //customer.id
-                    //   onChange={(event) => handleSelectOne(event, 3)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={"none"}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials("Andrei Penica")}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {"Andrei Penica"}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {"andrei.penica@yahoo.com"}
-                  </TableCell>
-                  <TableCell>
-                    {`${"Bucharest"}, ${"Romania"}`}
-                  </TableCell>
-                  <TableCell>
-                    {"0741444777"}
-                  </TableCell>
-                  <TableCell>
-                    {moment("11/09/2021").format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  hover
-                  key={3}
-                  selected={selectedCustomerIds.indexOf(0) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(0) !== -1} //customer.id
-                    //   onChange={(event) => handleSelectOne(event, 3)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={"none"}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials("Andrei Penica")}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {"Andrei Penica"}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {"andrei.penica@yahoo.com"}
-                  </TableCell>
-                  <TableCell>
-                    {`${"Bucharest"}, ${"Romania"}`}
-                  </TableCell>
-                  <TableCell>
-                    {"0741444777"}
-                  </TableCell>
-                  <TableCell>
-                    {moment("11/09/2021").format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  hover
-                  key={3}
-                  selected={selectedCustomerIds.indexOf(0) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(0) !== -1} //customer.id
-                    //   onChange={(event) => handleSelectOne(event, 3)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={"none"}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials("Andrei Penica")}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {"Andrei Penica"}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {"andrei.penica@yahoo.com"}
-                  </TableCell>
-                  <TableCell>
-                    {`${"Bucharest"}, ${"Romania"}`}
-                  </TableCell>
-                  <TableCell>
-                    {"0741444777"}
-                  </TableCell>
-                  <TableCell>
-                    {moment("11/09/2021").format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-                <TableRow
-                  hover
-                  key={3}
-                  selected={selectedCustomerIds.indexOf(0) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(0) !== -1} //customer.id
-                    //   onChange={(event) => handleSelectOne(event, 3)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={"none"}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials("Andrei Penica")}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {"Andrei Penica"}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {"andrei.penica@yahoo.com"}
-                  </TableCell>
-                  <TableCell>
-                    {`${"Bucharest"}, ${"Romania"}`}
-                  </TableCell>
-                  <TableCell>
-                    {"0741444777"}
-                  </TableCell>
-                  <TableCell>
-                    {moment("11/09/2021").format('DD/MM/YYYY')}
-                  </TableCell>
-                </TableRow>
-              {/* ))} */}
+              {
+                users.map(
+                    user => (
+                        <TableRow
+                            hover
+                            key={user.id}
+                        >
+                          <TableCell>
+                            <Box
+                                sx={{
+                                  alignItems: 'center',
+                                  display: 'flex'
+                                }}
+                            >
+                              <Avatar
+                                  src={user.picture}
+                                  sx={{ mr: 2 }}
+                              >
+                                {getInitials(user.firstName + " " + user.lastName)}
+                              </Avatar>
+                              <Typography
+                                  color="textPrimary"
+                                  variant="body1"
+                                  style={{marginLeft: "5px"}}
+                              >
+                                {user.firstName} {user.lastName}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                          <TableCell>
+                            {user.email}
+                          </TableCell>
+                          <TableCell>
+                            {user.city}
+                          </TableCell>
+                          <TableCell>
+                            {user.phone}
+                          </TableCell>
+                          <TableCell>
+                            {user.jobPreferences.openToWork ? "OPEN TO WORK" : "EMPLOYED"}
+                          </TableCell>
+                        </TableRow>
+                    )
+                )
+              }
             </TableBody>
           </Table>
         </Box>
       </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={10} //customers.length
-        // onPageChange={handlePageChange}
-        // onRowsPerPageChange={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
+      {/*<TablePagination*/}
+      {/*  component="div"*/}
+      {/*  count={10} //customers.length*/}
+      {/*  // onPageChange={handlePageChange}*/}
+      {/*  // onRowsPerPageChange={handleLimitChange}*/}
+      {/*  page={page}*/}
+      {/*  rowsPerPage={limit}*/}
+      {/*  rowsPerPageOptions={[5, 10, 25]}*/}
+      {/*/>*/}
     </Card>
                 </div>
             </div>
