@@ -27,12 +27,11 @@ class AuthService {
 
     register(data) {
         return axios.post(`${API_URL}/register-company`, {
-            firstName: data.firstName,
-            lastName: data.lastName,
+            name: data.name,
             email: data.email,
             password: data.password,
-            phoneNumber: data.phone,
-            city: data.city
+            logo: data.logo,
+            category: data.category
         })
     }
 
