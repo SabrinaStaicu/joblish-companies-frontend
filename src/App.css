@@ -1113,6 +1113,9 @@ tbody, td, tfoot, th, thead, tr {
   white-space: normal;
 }
 
+.open-to-work-checked {
+  margin-top: 10px;
+}
 
 
 

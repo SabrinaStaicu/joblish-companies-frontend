@@ -4,7 +4,7 @@ import HomePage from "./HomePage";
 import Footer from "../navigation/Footer";
 import Dashboard from '../dashboard/Dashboard';
 import Settings from '../dashboard/Settings';
-import ApplicantsList from '../dashboard/ApplicantsList';
+import ApplicantsList from '../applicant/ApplicantsList';
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 

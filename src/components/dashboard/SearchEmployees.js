@@ -4,11 +4,12 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import Button from "@material-ui/core/Button";
 import UserService from "../../service/UserService";
 
-const SearchEmployees = ({users, setUsers}) => {
+const SearchEmployees = ({setUsers}) => {
     const [searchInput, setSearchInput] = useState("");
+    const [openToWork, setOpenToWork] = useState(false);
 
     const search = () => {
-        UserService.searchUsersByName(searchInput).then(res => setUsers(res.data))
+        UserService.searchUsersByName(searchInput, openToWork).then(res => setUsers(res.data))
     }
 
     return (
@@ -36,6 +37,10 @@ const SearchEmployees = ({users, setUsers}) => {
                             />
                             <Button variant="contained" color="primary" style={{marginLeft: "10px"}} onClick={search}>SEARCH</Button>
                         </Box>
+                        <div className="open-to-work-checked">
+                            <label>Open to work</label> {" "}
+                            <input type="checkbox" onClick={() => setOpenToWork(!openToWork)}/>
+                        </div>
                     </CardContent>
                 </Card>
             </Box>

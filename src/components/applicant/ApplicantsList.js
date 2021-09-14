@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import UserService from "../../service/UserService";
-import SearchEmployees from "./SearchEmployees";
+import SearchEmployees from "../dashboard/SearchEmployees";
 
 const ApplicantsList = ({ customers, ...rest }) => {
   const [users, setUsers] = useState([]);
@@ -32,7 +32,7 @@ const ApplicantsList = ({ customers, ...rest }) => {
         <div className="main-body">
             <div className="page-wrapper">
                 <div className="flex-body"></div>
-                <SearchEmployees users={users} setUsers={setUsers}/>
+                <SearchEmployees setUsers={setUsers}/>
                   <Card {...rest}>
                     <PerfectScrollbar>
                       <Box sx={{ minWidth: 1050 }}>
