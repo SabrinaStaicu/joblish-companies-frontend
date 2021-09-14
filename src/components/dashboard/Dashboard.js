@@ -3,14 +3,230 @@ import Navbar from '../navigation/Navbar'
 import avatar from '../../images/avatar-1.jpg';
 import SideBar from '../dashboard/SideBar'
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import ApplicantsList from './ApplicantsList';
+import Modal from 'react-modal';
+import Button from "@material-ui/core/Button";
 
-const Dashboard = () => {
+
+import moment from 'moment';
+import { useState, useEffect } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import {
+  Avatar,
+  Box,
+  Card,
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Typography,
+} from '@material-ui/core';
+import getInitials from '../../utils/getInitials';
+import DashboardService from '../../service/DashboardService';
+
+const Dashboard = (...rest) => {
+
+    
+
+    const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(0);
+  const [jobs, setJobs] = useState([]);
+  const [applicants, setApplicants] = useState([]);
+
+  useEffect(() => {
+    DashboardService.getAllByCompanyId(1).then((res) => {
+        setJobs(res.data)
+    })
+
+    DashboardService.usersBy(1).then((res) => {
+        setApplicants(res.data)
+
+    })
+  },[])
+
+  console.log(applicants)
+  console.log(jobs)
+
+  const handleSelectAll = (event) => {
+    let newSelectedCustomerIds;
+
+    if (event.target.checked) {
+      newSelectedCustomerIds = jobs.map((job) => job.id);
+    } else {
+      newSelectedCustomerIds = [];
+    }
+
+    setSelectedCustomerIds(newSelectedCustomerIds);
+  };
+
+  const handleSelectOne = (event, id) => {
+    const selectedIndex = selectedCustomerIds.indexOf(id);
+    let newSelectedCustomerIds = [];
+
+    if (selectedIndex === -1) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
+    } else if (selectedIndex === 0) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
+    } else if (selectedIndex === selectedCustomerIds.length - 1) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(0, selectedIndex),
+        selectedCustomerIds.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelectedCustomerIds(newSelectedCustomerIds);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    const modalStyling = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
+
+
     return (
         <>
         <Navbar />
         {/* <div className="jobsTop">
                     <h1 style={{color:"white"}}>User profile</h1>
                 </div> */}
+        <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={modalStyling}
+            >
+                <div style={{textAlign: "right"}}>
+                    <Button variant="contained" color="secondary" onClick={closeModal}>X</Button>
+                </div>
+                <Card {...rest}>
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 1050 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    checked={selectedCustomerIds.length === 1}
+                    color="primary"
+                    indeterminate={
+                      selectedCustomerIds.length > 0
+                      && selectedCustomerIds.length < 2
+                    }
+                    onChange={handleSelectAll}
+                  />
+                </TableCell>
+                <TableCell>
+                  Title
+                </TableCell>
+                <TableCell>
+                  Location
+                </TableCell>
+                <TableCell>
+                  Category
+                </TableCell>
+                <TableCell>
+                  Salary
+                </TableCell>
+                <TableCell>
+                  Listed date
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {jobs.slice(0, limit).map((job) => (
+                <TableRow
+                  hover
+                  key={job.id}
+                  selected={selectedCustomerIds.indexOf(job.id) !== -1}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={selectedCustomerIds.indexOf(job.id) !== -1} //customer.id
+                      onChange={(event) => handleSelectOne(event, job.id)}
+                      value="true"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Box
+                      sx={{
+                        alignItems: 'center',
+                        display: 'flex'
+                      }}
+                    >
+                      <Avatar style={{marginRight:"5%"}}
+                        src={"none"}
+                        sx={{ mr: 2 }}
+                      >
+                        {getInitials(job.title)}
+                      </Avatar>
+                      <Typography
+                        color="textPrimary"
+                        variant="body1"
+                      >
+                        {job.title}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                  {`${job.city}, ${job.country}`}
+                  </TableCell>
+                  <TableCell>
+                  {job.category}
+                  </TableCell>
+                  <TableCell>
+                    {job.salary}
+                  </TableCell>
+                  <TableCell>
+                    {moment("11/09/2021").format('DD/MM/YYYY')}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+      <TablePagination
+        component="div"
+        count={jobs.length} //customers.length
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25]}
+      />
+    </Card>
+            </Modal>
         <div style={{display:"flex", flexDirection:"row"}}>
         <SideBar/>
         <div className="main-body">
@@ -66,7 +282,7 @@ const Dashboard = () => {
                                                 <div class="col">
                                                     <h5 class="m-0">Edit jobs</h5>
                                                 </div>
-                                                <div class="col-auto">
+                                                <div onClick={openModal} class="col-auto">
                                                     <label class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
                                                 </div>
                                             </div>
@@ -80,67 +296,27 @@ const Dashboard = () => {
                     <div class="col-xl-8 col-md-6">
                         <div className="card Recent-Users">
                             <div className="card-header">
-                                <h5>Recent Users</h5>
+                                <h5>Recent Applications</h5>
                             </div>
                             <div className="card-block px-0 py-3">
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <tbody>
-                                            <tr className="unread">
-                                                <td><img className="rounded-circle" src={avatar} alt="activity-user"/></td>
+                                        { applicants.length > 0 ? (
+                                                applicants.map(applicant =>  <tr className="unread">
+                                                <td><img className="rounded-circle" src={applicant.picture} alt="activity-user"/></td>
                                                 <td>
-                                                    <h6 className="mb-1">Isabella Christensen</h6>
-                                                    <p className="m-0">Lorem Ipsum is simply…</p>
+                                                    <h6 className="mb-1">{`${applicant.firstName} ${applicant.lastName}`}</h6>
+                                                    <p className="m-0">{applicant.notes?.length > 0 ? applicant.notes : "No notes."}</p>
                                                 </td>
                                                 <td>
-                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>11 MAY 12:56</h6>
-                                                </td>
-                                                <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr>
-                                            <tr className="unread">
-                                                <td><img className="rounded-circle" src={avatar} alt="activity-user"/></td>
-                                                <td>
-                                                    <h6 className="mb-1">Mathilde Andersen</h6>
-                                                    <p className="m-0">Lorem Ipsum is simply text of…</p>
-                                                </td>
-                                                <td>
-                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-red f-10 m-r-15"></i>11 MAY 10:35</h6>
+                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(applicant.date).format('DD/MM/YYYY')}</h6>
                                                 </td>
                                                 <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr>
-                                            <tr className="unread">
-                                                <td><img className="rounded-circle" src={avatar} alt="activity-user"/></td>
-                                                <td>
-                                                    <h6 className="mb-1">Karla Sorensen</h6>
-                                                    <p className="m-0">Lorem Ipsum is simply…</p>
-                                                </td>
-                                                <td>
-                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>9 MAY 17:38</h6>
-                                                </td>
-                                                <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr>
-                                            <tr className="unread">
-                                                <td><img className="rounded-circle" src={avatar} alt="activity-user"/></td>
-                                                <td>
-                                                    <h6 className="mb-1">Ida Jorgensen</h6>
-                                                    <p className="m-0">Lorem Ipsum is simply text of…</p>
-                                                </td>
-                                                <td>
-                                                    <h6 className="text-muted f-w-300"><i className="fas fa-circle text-c-red f-10 m-r-15"></i>19 MAY 12:56</h6>
-                                                </td>
-                                                <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr>
-                                            <tr className="unread">
-                                                <td><img className="rounded-circle" src={avatar} alt="activity-user"/></td>
-                                                <td>
-                                                    <h6 className="mb-1">Albert Andersen</h6>
-                                                    <p className="m-0">Lorem Ipsum is simply dummy…</p>
-                                                </td>
-                                                <td>
-                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>21 July 12:56</h6>
-                                                </td>
-                                                <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr>
+                                            </tr> )
+                                            ) : (
+                                                <h3 style={{marginLeft:"15%"}}>No results found for your search.</h3>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>

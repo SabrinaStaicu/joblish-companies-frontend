@@ -106,6 +106,7 @@ const ApplicantsList = ({ customers, ...rest }) => {
         </CardContent>
       </Card>
     </Box>
+    
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
