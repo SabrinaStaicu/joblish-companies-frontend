@@ -4,6 +4,7 @@ import HomePage from "./HomePage";
 import Footer from "../navigation/Footer";
 import Dashboard from '../dashboard/Dashboard';
 import Settings from '../dashboard/Settings';
+import ApplicantsList from '../dashboard/ApplicantsList';
 
 const Routes = () => {
     return (
@@ -13,6 +14,7 @@ const Routes = () => {
                     <Route path={"/"} exact component={HomePage} />
                     <Route path={"/dashboard"} component={Dashboard} />
                     <Route path={"/settings"} component={Settings} />
+                    <Route path={"/company-applicants"} component={ApplicantsList} />
                 </Switch>
             </Router>
             <Footer/>
