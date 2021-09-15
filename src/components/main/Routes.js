@@ -14,10 +14,10 @@ const Routes = () => {
         <>
             <Router>
                 <Switch>
-                    <Route path={"/"} exact component={HomePage} />
-                    <Route path={"/dashboard"} component={Dashboard} />
-                    <Route path={"/settings"} component={Settings} />
-                    <Route path={"/company-applicants"} component={ApplicantsList} />
+                    <Route path="/" exact component={HomePage} />
+                    <Route path="/dashboard" component={Dashboard} />
+                    <Route path="/settings" component={Settings} />
+                    <Route path="/company-applicants" component={ApplicantsList} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
                 </Switch>
