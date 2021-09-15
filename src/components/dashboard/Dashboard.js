@@ -3,90 +3,22 @@ import Navbar from '../navigation/Navbar'
 import SideBar from '../dashboard/SideBar'
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Modal from 'react-modal';
-import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
-import moment from 'moment';
 import { useState, useEffect } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import {
-  Avatar,
-  Box,
-  Card,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
-import getInitials from '../../utils/getInitials';
 import JobService from "../../service/JobService";
 import AuthService from "../../service/AuthService";
 import CurrentApplications from "../applications/CurrentApplications";
+import JobsModal from "../job/JobsModal";
+import ApplicationService from "../../service/ApplicationService";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
-    const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-  const [jobs, setJobs] = useState([]);
+    const [companyApplicants, setCompanyApplicants] = useState([]);
+    const [jobs, setJobs] = useState([]);
 
-  useEffect(() => {
-    JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then((res) => {
-        setJobs(res.data)
-    })
-  },[])
-
-  const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
-
-    if (event.target.checked) {
-      newSelectedCustomerIds = jobs.map((job) => job.id);
-    } else {
-      newSelectedCustomerIds = [];
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
-
-  const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
-
-    if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-    } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelectedCustomerIds(newSelectedCustomerIds);
-  };
-
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const history = useHistory();
-
-  const editJob = (job) => {
-    history.push({
-        pathname: `/edit-job`,
-        state: {job: job}
-    })
-  }
+    useEffect(() =>{
+        JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then(res => setJobs(res.data))
+        ApplicationService.getCompanyUniqueApplicants(AuthService.getCurrentUser().id).then(res => setCompanyApplicants(res.data))
+    }, [])
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -113,123 +45,7 @@ const Dashboard = (...rest) => {
     return (
         <>
         <Navbar  />
-        {/* <div className="jobsTop">
-                    <h1 style={{color:"white"}}>User profile</h1>
-                </div> */}
-        <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                style={modalStyling}
-            >
-                <div style={{textAlign: "right"}}>
-                    <Button variant="contained" color="secondary" onClick={closeModal}>X</Button>
-                </div>
-                <Card {...rest}>
-      <PerfectScrollbar>
-        <Box sx={{ minWidth: 1050 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === 1}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < 2
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell>
-                <TableCell>
-                  Title
-                </TableCell>
-                <TableCell>
-                  Location
-                </TableCell>
-                <TableCell>
-                  Category
-                </TableCell>
-                <TableCell>
-                  Salary
-                </TableCell>
-                <TableCell>
-                  Listed date
-                </TableCell>
-                <TableCell>
-                  Edit
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {jobs.slice(0, limit).map((job) => (
-                <TableRow
-                  hover
-                  key={job.id}
-                  selected={selectedCustomerIds.indexOf(job.id) !== -1}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(job.id) !== -1} //customer.id
-                      onChange={(event) => handleSelectOne(event, job.id)}
-                      value="true"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar style={{marginRight:"5%"}}
-                        src={"none"}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials(job.title)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {job.title}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                  {`${job.city}, ${job.country}`}
-                  </TableCell>
-                  <TableCell>
-                  {job.category}
-                  </TableCell>
-                  <TableCell>
-                    {job.salary}
-                  </TableCell>
-                  <TableCell>
-                    {moment("11/09/2021").format('DD/MM/YYYY')}
-                  </TableCell>
-                  <TableCell>
-                    <div class="col-auto">
-                        <label onClick={() =>{editJob(job)}} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">Edit</label>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={jobs.length} //customers.length
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
-    </Card>
-            </Modal>
+        <JobsModal modalIsOpen={modalIsOpen} closeModal={closeModal} modalStyling={modalStyling} rest={rest} jobs={jobs}/>
         <div style={{display:"flex", flexDirection:"row"}}>
         <SideBar/>
         <div className="main-body">
@@ -283,13 +99,13 @@ const Dashboard = (...rest) => {
                         <div class="card-block">
                                             <div class="row align-items-center justify-content-center">
                                                 <div class="col">
-                                                    <h5 class="m-0">Edit jobs</h5>
+                                                    <h5 class="m-0">Jobs</h5>
                                                 </div>
                                                 <div onClick={openModal} class="col-auto">
                                                     <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
                                                 </div>
                                             </div>
-                                            {/* <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">Jobs listed</sub></h2> */}
+                                            {/* <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">EditJob listed</sub></h2> */}
                                             <h6 class="text-muted mt-4 mb-0">List all the company jobs. </h6>
                                             <i class="fab fa-angellist text-c-purple f-50"></i>
                                         </div>
@@ -309,7 +125,7 @@ const Dashboard = (...rest) => {
                                                     <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
                                                 </div>
                                             </div>
-                                            <h2 class="mt-3 f-w-300">{jobs.length}<sub class="text-muted f-14">Jobs listed</sub></h2>
+                                            <h2 class="mt-3 f-w-300"><sub class="text-muted f-14">{jobs.length} Jobs listed</sub></h2>
                                             <h6 class="text-muted mt-4 mb-0">Fill out the form to list a new job! </h6>
                                             <i class="fab fa-angellist text-c-purple f-50"></i>
                                         </div>
@@ -321,7 +137,7 @@ const Dashboard = (...rest) => {
                                                     <i class="feather icon-zap f-30 text-c-green"></i>
                                                 </div>
                                                 <div class="col">
-                                                    <h3 class="f-w-300">235</h3>
+                                                    <h3 class="f-w-300">{companyApplicants.length}</h3>
                                                     <span class="d-block text-uppercase">TOTAL APPLICANTS</span>
                                                 </div>
                                             </div>

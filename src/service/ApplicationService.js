@@ -11,6 +11,14 @@ class ApplicationService {
     approveApplication(applicationId) {
         return axios.get(`${APPLICATION_API_URL}/approve-application/${applicationId}`, {headers: AuthHeader()});
     }
+
+    rejectApplication(id) {
+        return axios.get(`${APPLICATION_API_URL}/reject-application/${id}`, {headers: AuthHeader()})
+    }
+
+    getCompanyUniqueApplicants(id) {
+        return axios.get(`${APPLICATION_API_URL}/company-unique-applications/${id}`, {headers: AuthHeader()});
+    }
 }
 
 export default new ApplicationService;

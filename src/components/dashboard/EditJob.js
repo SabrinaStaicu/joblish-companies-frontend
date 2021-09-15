@@ -14,7 +14,7 @@ import { ContactSupportOutlined } from '@material-ui/icons';
 import JobService from '../../service/JobService';
 
 
-const EditJob = ({job}) => {
+const EditJob = () => {
 
     const location = useLocation();
     const classes = useStyles();
@@ -50,9 +50,9 @@ const EditJob = ({job}) => {
                     </Typography>
                     <form className={classes.form} onSubmit={
                         handleSubmit((data) => {
-                            console.log(data)
-                            JobService.updateJobDetails(data.category, data.city, data.country, data.date, data.description, data.jobType, data.salary, data.title, location.state.job.id)
-                            history.push("/dashboard")
+                            JobService.updateJobDetails(data.category, data.city, data.country, data.date, data.description, data.jobType, data.salary, data.title, location.state.job.id).then(
+                                res => history.push("/dashboard")
+                            )
                         })
                     } noValidate>
                         <Grid container spacing={2}>
