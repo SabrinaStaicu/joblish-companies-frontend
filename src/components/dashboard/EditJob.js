@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
 import { ContactSupportOutlined } from '@material-ui/icons';
+import JobService from '../../service/JobService';
 
 
 const EditJob = ({job}) => {
@@ -25,14 +26,14 @@ const EditJob = ({job}) => {
         category: location.state.job?.category,
         city: location.state.job?.city,
         country: location.state.job?.country,
-        date: location.state.job.date,
+        date: `${location.state.job.date[0]}-${location.state.job.date[1] < 10 ? "0" + location.state.job.date[1] : location.state.job.date[1] }-${location.state.job.date[2] < 10 ? "0" + location.state.job.date[2] : location.state.job.date[2] }`,
         description: stripedHtml,
         jobType: location.state.job?.jobType,
         salary: location.state.job?.salary,
         title: location.state.job?.title,
     });
 
-    console.log()
+    console.log(location.state.job.date[1])
 
     const { register, handleSubmit, formState: {errors} } = useForm({
         defaultValues: preloadedValues
@@ -41,7 +42,7 @@ const EditJob = ({job}) => {
     return (
         <>
         <Navbar />
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="sm">
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5">
@@ -50,6 +51,7 @@ const EditJob = ({job}) => {
                     <form className={classes.form} onSubmit={
                         handleSubmit((data) => {
                             console.log(data)
+                            JobService.updateJobDetails(data.category, data.city, data.country, data.date, data.description, data.jobType, data.salary, data.title, location.state.job.id)
                             history.push("/dashboard")
                         })
                     } noValidate>
@@ -97,7 +99,7 @@ const EditJob = ({job}) => {
                                     required
                                     fullWidth
                                     {...register("date", {required: true, minLength: 2, maxLength: 30 })}
-                                    // label="Date"
+                                    label="Date"
                                     type="date"
                                     id="date"
                                     autoComplete="date"
