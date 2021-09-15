@@ -94,6 +94,18 @@ const Register = () => {
                                 {errors.password && <span style={{color:"red"}}>Please upload the logo of your company!</span>}
                             </Grid>
                             <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    {...register("description", {required: true, minLength: 5 })}
+                                    label="Short description"
+                                    id="description"
+                                    autoComplete="description"
+                                />
+                                {errors.description && <span style={{color:"red"}}>Please upload a description for the company!</span>}
+                            </Grid>
+                            <Grid item xs={12}>
                                 <InputLabel id="demo-simple-select-label" style={{marginBottom: "10px"}}>Category</InputLabel>
                                 <Select
                                     id="category"

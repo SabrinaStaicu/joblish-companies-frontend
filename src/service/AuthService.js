@@ -31,7 +31,8 @@ class AuthService {
             email: data.email,
             password: data.password,
             logo: data.logo,
-            category: data.category
+            category: data.category,
+            description: data.description
         })
     }
 
