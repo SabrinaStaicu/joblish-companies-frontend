@@ -7,6 +7,10 @@ class ApplicationService {
     getAllApplicationForCompany(companyId) {
         return axios.get(`${APPLICATION_API_URL}/applications-for-company/${companyId}`, {headers: AuthHeader()})
     }
+
+    approveApplication(applicationId) {
+        return axios.get(`${APPLICATION_API_URL}/approve-application/${applicationId}`, {headers: AuthHeader()});
+    }
 }
 
 export default new ApplicationService;

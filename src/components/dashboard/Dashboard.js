@@ -1,6 +1,5 @@
 import React from 'react'
 import Navbar from '../navigation/Navbar'
-import avatar from '../../images/avatar-1.jpg';
 import SideBar from '../dashboard/SideBar'
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Modal from 'react-modal';
@@ -23,7 +22,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
-import UserService from "../../service/UserService";
 import JobService from "../../service/JobService";
 import AuthService from "../../service/AuthService";
 import CurrentApplications from "../applications/CurrentApplications";
@@ -34,16 +32,11 @@ const Dashboard = (...rest) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [jobs, setJobs] = useState([]);
-  // const [applicants, setApplicants] = useState([]);
 
   useEffect(() => {
     JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then((res) => {
         setJobs(res.data)
     })
-
-    // UserService.usersByCompanyId(AuthService.getCurrentUser().id).then((res) => {
-    //     setApplicants(res.data)
-    // })
   },[])
 
   const handleSelectAll = (event) => {
@@ -316,7 +309,7 @@ const Dashboard = (...rest) => {
                                                     <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
                                                 </div>
                                             </div>
-                                            <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">Jobs listed</sub></h2>
+                                            <h2 class="mt-3 f-w-300">{jobs.length}<sub class="text-muted f-14">Jobs listed</sub></h2>
                                             <h6 class="text-muted mt-4 mb-0">Fill out the form to list a new job! </h6>
                                             <i class="fab fa-angellist text-c-purple f-50"></i>
                                         </div>

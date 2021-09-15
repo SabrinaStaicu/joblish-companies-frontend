@@ -8,11 +8,12 @@ const CurrentApplications = () => {
 
     useEffect(() => {
         ApplicationService.getAllApplicationForCompany(AuthService.getCurrentUser().id)
-            .then(res => {
-                setApplications(res.data)
-                console.log(res.data)
-            })
+            .then(res => setApplications(res.data))
     }, [])
+
+    const approveApplication = application => {
+        ApplicationService.approveApplication(application.id).then(res => setApplications(applications.filter(app => app.job.title !== application.job.title)))
+    }
 
     return (
         <div className="col-xl-8 col-md-6">
@@ -37,8 +38,11 @@ const CurrentApplications = () => {
                                             className="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(application.date).format('DD/MM/YYYY')}
                                         </h6>
                                     </td>
+                                    <td>
+                                        <h6 className="text-muted">{application.job.title}</h6>
+                                    </td>
                                     <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!"
-                                                                                                              className="label theme-bg text-white f-12">Approve</a>
+                                                                                                              className="label theme-bg text-white f-12" onClick={() => approveApplication(application)}>Approve</a>
                                     </td>
                                 </tr>)
                             ) : (
