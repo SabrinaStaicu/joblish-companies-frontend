@@ -13,7 +13,7 @@ import {
     Typography
 } from "@material-ui/core";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import getInitials from "../../utils/getInitials";
+import getInitials from "../../util/GetInitials";
 import moment from "moment";
 import Modal from "react-modal";
 import {useHistory} from "react-router-dom";
@@ -126,7 +126,7 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
                                     >
                                         <TableCell padding="checkbox">
                                             <Checkbox
-                                                checked={selectedCustomerIds.indexOf(job.id) !== -1} //customer.id
+                                                checked={selectedCustomerIds.indexOf(job.id) !== -1}
                                                 onChange={(event) => handleSelectOne(event, job.id)}
                                                 value="true"
                                             />
@@ -165,8 +165,8 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
                                             {moment("11/09/2021").format('DD/MM/YYYY')}
                                         </TableCell>
                                         <TableCell>
-                                            <div class="col-auto">
-                                                <label onClick={() =>{editJob(job)}} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">Edit</label>
+                                            <div className="col-auto">
+                                                <label onClick={() =>{editJob(job)}} style={{cursor:"pointer"}} className="label theme-bg2 text-white f-14 f-w-400 float-right">Edit</label>
                                             </div>
                                         </TableCell>
                                     </TableRow>

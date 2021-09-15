@@ -13,7 +13,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import getInitials from '../../utils/getInitials';
+import getInitials from '../../util/GetInitials';
 import UserService from "../../service/UserService";
 import SearchEmployees from "../dashboard/SearchEmployees";
 

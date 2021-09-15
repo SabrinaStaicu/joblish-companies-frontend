@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react';
 import Navbar from '../navigation/Navbar';
-import {useStyles} from "../../utils/FormStyling";
+import {useStyles} from "../../util/FormStyling";
 import {useHistory, useLocation} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";

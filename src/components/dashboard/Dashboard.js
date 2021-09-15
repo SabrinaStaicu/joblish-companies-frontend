@@ -10,6 +10,7 @@ import CurrentApplications from "../applications/CurrentApplications";
 import JobsModal from "../job/JobsModal";
 import ApplicationService from "../../service/ApplicationService";
 import {useHistory} from "react-router-dom";
+import {modalStyling} from "../../util/ModalStyling";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
@@ -32,21 +33,9 @@ const Dashboard = (...rest) => {
         setIsOpen(false);
     }
 
-    const modalStyling = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-        },
-    };
-
     const addJob = () => {
       history.push("/add-job")
     }
-
 
     return (
         <>
@@ -112,7 +101,6 @@ const Dashboard = (...rest) => {
                                                     <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
                                                 </div>
                                             </div>
-                                            {/* <h2 class="mt-3 f-w-300">45<sub class="text-muted f-14">EditJob listed</sub></h2> */}
                                             <h6 class="text-muted mt-4 mb-0">List all the company jobs. </h6>
                                             <i class="fab fa-angellist text-c-purple f-50"></i>
                                         </div>
@@ -145,7 +133,7 @@ const Dashboard = (...rest) => {
                                                 </div>
                                                 <div class="col">
                                                     <h3 class="f-w-300">{companyApplicants.length}</h3>
-                                                    <span class="d-block text-uppercase">TOTAL APPLICANTS</span>
+                                                    <span class="d-block text-uppercase">TOTAL APPLICANT(S)</span>
                                                 </div>
                                             </div>
                                         </div>

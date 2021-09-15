@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Navbar from '../navigation/Navbar';
-import {useStyles} from "../../utils/FormStyling";
 import {useHistory, useLocation} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -9,9 +8,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
-import { ContactSupportOutlined } from '@material-ui/icons';
 import JobService from '../../service/JobService';
 import AuthService from '../../service/AuthService';
+import {useStyles} from "../../util/FormStyling";
 
 
 const AddJob = () => {
