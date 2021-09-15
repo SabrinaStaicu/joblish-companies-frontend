@@ -3,7 +3,6 @@ import Navbar from '../navigation/Navbar'
 import avatar from '../../images/avatar-1.jpg';
 import SideBar from '../dashboard/SideBar'
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import ApplicantsList from './ApplicantsList';
 import Modal from 'react-modal';
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
@@ -26,8 +25,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
-import DashboardService from '../../service/DashboardService';
+import DashboardService from '../../service/JobService';
 import EditJob from './EditJob';
+import UserService from "../../service/UserService";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
@@ -45,7 +45,7 @@ const Dashboard = (...rest) => {
         setJobs(res.data)
     })
 
-    DashboardService.usersBy(1).then((res) => {
+    UserService.usersBy(1).then((res) => {
         setApplicants(res.data)
 
     })

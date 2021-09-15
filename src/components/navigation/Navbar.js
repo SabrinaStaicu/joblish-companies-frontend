@@ -40,10 +40,10 @@ const Navbar = ({homePosition }) => {
         window.addEventListener('scroll', handleScroll)
     }, [])
 
-    const logout = () => {
-        AuthService.logout();
-        history.push("/login")
-    }
+    // const logout = () => {
+    //     AuthService.logout();
+    //     history.push("/login")
+    // }
 
     return (
         <nav style={{backgroundColor:"" + stickyColor, position:"" + position, zIndex:"3", borderBottom: stickyBorder , animation:position === "sticky" ? "fadein 0.3s" : "none"}}>
@@ -53,9 +53,7 @@ const Navbar = ({homePosition }) => {
             {
                 AuthService.getCurrentUser() ? (
                     <ul>
-                        <li><Link to="/profile">Company</Link></li>
                         <li><Link to="/dashboard">Dashboard</Link></li>
-                        <li><Link onClick={logout}>Logout</Link></li>
                     </ul>
                 ) : (
                     <ul>
