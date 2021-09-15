@@ -20,7 +20,7 @@ const EditJob = ({job}) => {
     const classes = useStyles();
     const history = useHistory()
 
-    var stripedHtml = location.state.job?.description.replace(/<[^>]+>/g, '');
+    let stripedHtml = location.state.job?.description.replace(/<[^>]+>/g, '');
 
     const [preloadedValues, setPreloadedValues] = useState({
         category: location.state.job?.category,
