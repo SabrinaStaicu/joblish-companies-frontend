@@ -9,11 +9,13 @@ import AuthService from "../../service/AuthService";
 import CurrentApplications from "../applications/CurrentApplications";
 import JobsModal from "../job/JobsModal";
 import ApplicationService from "../../service/ApplicationService";
+import {useHistory} from "react-router-dom";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
     const [companyApplicants, setCompanyApplicants] = useState([]);
     const [jobs, setJobs] = useState([]);
+    const history = useHistory();
 
     useEffect(() =>{
         JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then(res => setJobs(res.data))
@@ -41,6 +43,10 @@ const Dashboard = (...rest) => {
         },
     };
 
+    const addJob = () => {
+      history.push("/add-job")
+    }
+
 
     return (
         <>
@@ -55,17 +61,18 @@ const Dashboard = (...rest) => {
                     <div className="col-md-6 col-xl-4">
                         <div className="card">
                             <div className="card-block">
-                                <h6 className="mb-4">Title</h6>
+                                <h6 className="mb-4">Employees</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>IDK</h3>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>35</h3>
                                     </div>
 
                                     <div className="col-3 text-right">
-                                        <p className="m-b-0">67%</p>
+                                        <p className="m-b-0">50% Capacity</p>
                                     </div>
-                                    <div className="progress m-t-30" style={{height: "7px"}}>
-                                        <div className="progress-bar progress-c-theme" role="progressbar" style={{width: "50%", ariaValuenow:"50", ariaValuemin:"0", ariaValuemax:"100"}}></div>
+                                    <div className="progress" style={{height:"7px"}}>
+                                      <div className="progress-bar" role="progressbar" style={{width: `50%`, height:"7px", backgroundColor:"#1ed1aa"}}
+                                      aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
