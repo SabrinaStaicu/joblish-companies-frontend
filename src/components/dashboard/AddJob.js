@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import Navbar from '../navigation/Navbar';
 import {useStyles} from "../../utils/FormStyling";
@@ -12,33 +11,17 @@ import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
 import { ContactSupportOutlined } from '@material-ui/icons';
 import JobService from '../../service/JobService';
+import AuthService from '../../service/AuthService';
 
 
-const EditJob = () => {
-
+const AddJob = () => {
     const location = useLocation();
     const classes = useStyles();
     const history = useHistory()
 
-    let stripedHtml = location.state.job?.description.replace(/<[^>]+>/g, '');
+    console.log(AuthService.getCurrentUser())
 
-    const [preloadedValues, setPreloadedValues] = useState({
-        category: location.state.job?.category,
-        city: location.state.job?.city,
-        country: location.state.job?.country,
-        date: `${location.state.job.date[0]}-${location.state.job.date[1] < 10 ? "0" + location.state.job.date[1] : location.state.job.date[1] }-${location.state.job.date[2] < 10 ? "0" + location.state.job.date[2] : location.state.job.date[2] }`,
-        description: stripedHtml,
-        jobType: location.state.job?.jobType,
-        experienceType: location.state.job.experienceType,
-        salary: location.state.job?.salary,
-        title: location.state.job?.title,
-    });
-
-    console.log(location.state.job.date[1])
-
-    const { register, handleSubmit, formState: {errors} } = useForm({
-        defaultValues: preloadedValues
-    });
+    const { register, handleSubmit, formState: {errors} } = useForm({});
 
     return (
         <>
@@ -47,13 +30,13 @@ const EditJob = () => {
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        Edit job
+                        Add job
                     </Typography>
                     <form className={classes.form} onSubmit={
                         handleSubmit((data) => {
-                            JobService.updateJobDetails(data.category, data.city, data.country, data.date, data.description, data.jobType, data.experienceType, data.salary, data.title, location.state.job.id).then(
-                                res => history.push("/dashboard")
-                            )
+                            console.log(data)
+                            JobService.addJob(data)
+                            history.push("/dashboard")
                         })
                     } noValidate>
                         <Grid container spacing={2}>
@@ -174,10 +157,6 @@ const EditJob = () => {
                                 />
                                 {errors.title && <span style={{color:"red"}}>Too short!</span>}
                             </Grid>
-                            {/*<Grid item xs={12}>*/}
-                            {/*    <label style={{marginRight: "10px"}}>Looking for a job</label>*/}
-                            {/*    <input name="lookingForJob" id="lookingForJob" {...register("lookingForJob")} type="checkbox"/>*/}
-                            {/*</Grid>*/}
                         </Grid>
                         <Button
                             type="submit"
@@ -186,7 +165,7 @@ const EditJob = () => {
                             color="primary"
                             className={classes.submit}
                         >
-                            Update
+                            Add Job
                         </Button>
                     </form>
                 </div>
@@ -195,4 +174,4 @@ const EditJob = () => {
     )
 }
 
-export default EditJob
+export default AddJob

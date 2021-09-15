@@ -8,6 +8,7 @@ import Users from '../applicant/Users';
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import EditJob from '../dashboard/EditJob';
+import AddJob from '../dashboard/AddJob';
 
 
 const Routes = () => {
@@ -22,6 +23,7 @@ const Routes = () => {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
                     <Route path="/edit-job" component={EditJob}/>
+                    <Route path="/add-job" component={AddJob}/>
                 </Switch>
             </Router>
             <Footer/>

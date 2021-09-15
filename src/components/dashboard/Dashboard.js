@@ -122,7 +122,7 @@ const Dashboard = (...rest) => {
                                                     <h5 class="m-0">List new job</h5>
                                                 </div>
                                                 <div class="col-auto" >
-                                                    <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
+                                                    <label onClick={addJob} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
                                                 </div>
                                             </div>
                                             <h2 class="mt-3 f-w-300"><sub class="text-muted f-14">{jobs.length} Jobs listed</sub></h2>
