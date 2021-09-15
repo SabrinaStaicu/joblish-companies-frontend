@@ -71,6 +71,8 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
         setPage(newPage);
     };
 
+    console.log(page)
+
     return (
         <Modal
             isOpen={modalIsOpen}
@@ -118,7 +120,7 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {jobs.slice(0, limit).map((job) => (
+                                {jobs.slice(limit*page, page == 0 ? limit : limit*(page+1)).map((job) => (
                                     <TableRow
                                         hover
                                         key={job.id}

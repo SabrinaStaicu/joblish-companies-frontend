@@ -9,6 +9,7 @@ import Login from "../auth/Login";
 import Register from "../auth/Register";
 import EditJob from '../dashboard/EditJob';
 import AddJob from '../dashboard/AddJob';
+import PrivateRoute from '../../util/PrivateRoute';
 
 
 const Routes = () => {
@@ -17,13 +18,13 @@ const Routes = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={HomePage} />
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route path="/settings" component={Settings} />
-                    <Route path="/company-applicants" component={Users} />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
+                    <PrivateRoute path="/settings" component={Settings} />
+                    <PrivateRoute path="/company-applicants" component={Users} />
+                    <PrivateRoute path="/edit-job" component={EditJob} />
+                    <PrivateRoute path="/add-job" component={AddJob} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
-                    <Route path="/edit-job" component={EditJob}/>
-                    <Route path="/add-job" component={AddJob}/>
                 </Switch>
             </Router>
             <Footer/>

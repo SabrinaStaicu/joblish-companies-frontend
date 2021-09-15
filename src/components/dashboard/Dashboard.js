@@ -11,19 +11,25 @@ import JobsModal from "../job/JobsModal";
 import ApplicationService from "../../service/ApplicationService";
 import {useHistory} from "react-router-dom";
 import {modalStyling} from "../../util/ModalStyling";
+import { Route, Link, Switch, Redirect } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
+
     const [companyApplicants, setCompanyApplicants] = useState([]);
     const [jobs, setJobs] = useState([]);
     const history = useHistory();
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
 
     useEffect(() =>{
         JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then(res => setJobs(res.data))
         ApplicationService.getCompanyUniqueApplicants(AuthService.getCurrentUser().id).then(res => setCompanyApplicants(res.data))
     }, [])
 
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    if (!AuthService.getCurrentUser()) {
+      return <Redirect to="/login" />;
+    }
 
     function openModal() {
         setIsOpen(true);
@@ -36,6 +42,7 @@ const Dashboard = (...rest) => {
     const addJob = () => {
       history.push("/add-job")
     }
+
 
     return (
         <>
@@ -82,7 +89,7 @@ const Dashboard = (...rest) => {
                                         <p className="m-b-0">67%</p>
                                     </div>
                                     <div className="progress m-t-30" style={{height: "7px"}}>
-                                        <div className="progress-bar progress-c-theme" role="progressbar" style={{width: "50%", ariaValuenow:"50", ariaValuemin:"0", ariaValuemax:"100"}}></div>
+                                        <div className="progress-bar progress-c-theme" role="progressbar" style={{width: "50%", ariaValuenow:"50", ariaValuemin:"0", ariaValuemax:"100", backgroundColor:"#1ed1aa"}}></div>
                                     </div>
                                 </div>
                             </div>
