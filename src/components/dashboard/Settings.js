@@ -83,7 +83,6 @@ const Settings = () => {
                 </div>
             </div>
         </>
-
   );
 };
 

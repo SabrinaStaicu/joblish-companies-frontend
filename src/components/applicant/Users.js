@@ -17,7 +17,7 @@ import getInitials from '../../utils/getInitials';
 import UserService from "../../service/UserService";
 import SearchEmployees from "../dashboard/SearchEmployees";
 
-const ApplicantsList = ({ customers, ...rest }) => {
+const Users = ({ customers, ...rest }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ApplicantsList = ({ customers, ...rest }) => {
     <Navbar />
     <div style={{display:"flex", flexDirection:"row"}}>
         <SideBar/>
-        <div className="main-body">
+        <div className="main-body" style={{height: "700px"}}>
             <div className="page-wrapper">
                 <div className="flex-body"></div>
                 <SearchEmployees setUsers={setUsers}/>
@@ -114,4 +114,4 @@ const ApplicantsList = ({ customers, ...rest }) => {
   );
 };
 
-export default ApplicantsList;
+export default Users;

@@ -21,8 +21,6 @@ class JobService {
             title : title,
         }, {headers: AuthHeader()})
     }
-
-
 }
 
 export default new JobService();

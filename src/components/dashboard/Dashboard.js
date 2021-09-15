@@ -6,8 +6,6 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Modal from 'react-modal';
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
-
-
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -25,34 +23,28 @@ import {
   Typography,
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
-import DashboardService from '../../service/JobService';
-import EditJob from './EditJob';
 import UserService from "../../service/UserService";
+import JobService from "../../service/JobService";
+import AuthService from "../../service/AuthService";
+import CurrentApplications from "../applications/CurrentApplications";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
-
-    
-
     const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [jobs, setJobs] = useState([]);
-  const [applicants, setApplicants] = useState([]);
+  // const [applicants, setApplicants] = useState([]);
 
   useEffect(() => {
-    DashboardService.getAllByCompanyId(1).then((res) => {
+    JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then((res) => {
         setJobs(res.data)
     })
 
-    UserService.usersBy(1).then((res) => {
-        setApplicants(res.data)
-
-    })
+    // UserService.usersByCompanyId(AuthService.getCurrentUser().id).then((res) => {
+    //     setApplicants(res.data)
+    // })
   },[])
-
-  console.log(applicants)
-  console.log(jobs)
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
@@ -102,8 +94,6 @@ const Dashboard = (...rest) => {
         state: {job: job}
     })
   }
-
-
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -313,36 +303,7 @@ const Dashboard = (...rest) => {
                         </div>
                     </div>
 
-                    <div class="col-xl-8 col-md-6">
-                        <div className="card Recent-Users">
-                            <div className="card-header">
-                                <h5>Recent Applications</h5>
-                            </div>
-                            <div className="card-block px-0 py-3">
-                                <div className="table-responsive">
-                                    <table className="table table-hover">
-                                        <tbody>
-                                        { applicants.length > 0 ? (
-                                                applicants.map(applicant =>  <tr className="unread">
-                                                <td><img className="rounded-circle" src={applicant.picture} alt="activity-user"/></td>
-                                                <td>
-                                                    <h6 className="mb-1">{`${applicant.firstName} ${applicant.lastName}`}</h6>
-                                                    <p className="m-0">{applicant.notes?.length > 0 ? applicant.notes : "No notes."}</p>
-                                                </td>
-                                                <td>
-                                                    <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(applicant.date).format('DD/MM/YYYY')}</h6>
-                                                </td>
-                                                <td><a href="#!" className="label theme-bg2 text-white f-12">Reject</a><a href="#!" className="label theme-bg text-white f-12">Approve</a></td>
-                                            </tr> )
-                                            ) : (
-                                                <h3 style={{marginLeft:"15%"}}>No applicants found.</h3>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <CurrentApplications />
 
                     <div class="col-xl-4 col-md-6">
                                     <div class="card card-event">
