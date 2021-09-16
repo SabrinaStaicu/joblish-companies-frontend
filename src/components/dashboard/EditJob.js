@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
 import { ContactSupportOutlined } from '@material-ui/icons';
 import JobService from '../../service/JobService';
+import {InputLabel, MenuItem, Select} from "@material-ui/core";
 
 
 const EditJob = () => {
@@ -123,29 +124,36 @@ const EditJob = () => {
                                 {errors.description && <span style={{color:"red"}}>Too short!</span>}
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    {...register("jobType", {required: true})}
-                                    label="Job Type"
-                                    type="jobType"
+                            <InputLabel id="demo-simple-select-label" style={{marginBottom: "10px"}}>Job Type</InputLabel>
+                                <Select
                                     id="jobType"
+                                    variant="outlined"
+                                    fullWidth
+                                    required
                                     autoComplete="jobType"
-                                />
+                                    {...register("jobType", {required: true})}
+                                    >
+                                    <MenuItem selected>Job Type</MenuItem>
+                                    <MenuItem value="PART_TIME">Part Time</MenuItem>
+                                    <MenuItem value="FULL_TIME">Full Time</MenuItem>
+                                </Select>
                                 {errors.jobType && <span style={{color:"red"}}>Please enter a valid JobType</span>}
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    {...register("experienceType", {required: true})}
-                                    label="Experience Level"
-                                    type="experienceType"
+                            <InputLabel id="demo-simple-select-label" style={{marginBottom: "10px"}}>Job Type</InputLabel>
+                                <Select
                                     id="experienceType"
+                                    variant="outlined"
+                                    fullWidth
+                                    required
                                     autoComplete="experienceType"
-                                />
+                                    {...register("experienceType", {required: true})}
+                                    >
+                                    <MenuItem selected>Experience Level</MenuItem>
+                                    <MenuItem value="JUNIOR">Junior</MenuItem>
+                                    <MenuItem value="MID">Mid</MenuItem>
+                                    <MenuItem value="SENIOR">Senior</MenuItem>
+                                </Select>
                                 {errors.experienceType && <span style={{color:"red"}}>Please enter a valid experience level</span>}
                             </Grid>
                             <Grid item xs={12}>

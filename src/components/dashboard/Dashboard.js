@@ -12,6 +12,7 @@ import ApplicationService from "../../service/ApplicationService";
 import {useHistory} from "react-router-dom";
 import {modalStyling} from "../../util/ModalStyling";
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
@@ -27,10 +28,7 @@ const Dashboard = (...rest) => {
         ApplicationService.getCompanyUniqueApplicants(AuthService.getCurrentUser().id).then(res => setCompanyApplicants(res.data))
     }, [])
 
-    if (!AuthService.getCurrentUser()) {
-      return <Redirect to="/login" />;
-    }
-
+ 
     function openModal() {
         setIsOpen(true);
     }

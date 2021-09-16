@@ -27,7 +27,7 @@ const Routes = () => {
                     <Route path="/register" component={Register}/>
                 </Switch>
             </Router>
-            <Footer/>
+        <Footer/>
         </>
     );
 };
