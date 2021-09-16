@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from "../navigation/Navbar";
 import { useHistory } from 'react-router';
+import AuthService from "../../service/AuthService";
 
 const HomePage = () => {
 
@@ -26,10 +27,19 @@ const HomePage = () => {
             <h2 class="seo__subtitle">Recruitment offer through Joblish</h2>
                 <div class="display-5 fw-bold lh-1 mb-3" style={{marginTop:"20%"}}><h1 style={{fontSize:"80px",fontWeight:"900", color:"#8976fe"}}>ATTRACT.</h1><h1 style={{fontSize:"80px", fontWeight:"900",color:"#8976fe"}}>CONVINCE.</h1><h1 style={{fontSize:"80px",fontWeight:"900", color:"#8976fe"}}>RECRUIT.</h1></div>
                 <p class="lead">Finding the right candidates is a difficult task. Together we will make it easier.</p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button type="button" onClick={goToLogin} class="btn btn-primary btn-lg px-4 me-md-2">Log in</button>
-                <button type="button" onClick={goToRegister} class="btn btn-secondary btn-lg px-4">Register</button>
-            </div>
+                {
+                    !AuthService.getCurrentUser() && (
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="button" onClick={goToLogin}
+                                    className="btn btn-primary btn-lg px-4 me-md-2">Log in
+                            </button>
+                            <button type="button" onClick={goToRegister}
+                                    className="btn btn-secondary btn-lg px-4">Register
+                            </button>
+                        </div>
+                    )
+                }
+
       </div>
     </div>
   </div>
