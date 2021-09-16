@@ -10,6 +10,8 @@ import Register from "../auth/Register";
 import EditJob from '../dashboard/EditJob';
 import AddJob from '../dashboard/AddJob';
 import PrivateRoute from '../../util/PrivateRoute';
+import UserDetails from '../user/UserDetails';
+import UserPage from '../user/UserPage';
 
 
 const Routes = () => {
@@ -25,6 +27,7 @@ const Routes = () => {
                     <PrivateRoute path="/add-job" component={AddJob} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register}/>
+                    <Route path="/user" component={UserPage}/>
                 </Switch>
             </Router>
         <Footer/>

@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import moment from "moment";
 import ApplicationService from "../../service/ApplicationService";
 import AuthService from "../../service/AuthService";
+import { useHistory } from 'react-router';
 
 const CurrentApplications = () => {
     const [applications, setApplications] = useState([])
+    const history = useHistory();
 
     useEffect(() => {
         ApplicationService.getAllApplicationForCompany(AuthService.getCurrentUser().id)
@@ -19,6 +21,17 @@ const CurrentApplications = () => {
         ApplicationService.rejectApplication(id).then(res => setApplications(applications.filter(app => app.id !== id)));
     }
 
+    const seeApplication = (id) => {
+        ApplicationService.changeApplicationStatus(id, "Seen")
+    }
+
+    const viewProfile = (application) => {
+        history.push({
+            pathname: `/user`,
+            state: {userId: application.appUser.id}
+        })
+    }
+
     return (
         <div className="col-xl-8 col-md-6">
             <div className="card Recent-Users">
@@ -30,7 +43,10 @@ const CurrentApplications = () => {
                         <table className="table table-hover">
                             <tbody>
                             {applications.length > 0 ? (
-                                applications.map(application => <tr className="unread">
+                                applications.map(application => <tr className="unread" style={{cursor:"pointer"}} onClick={() => {
+                                    viewProfile(application)
+                                    seeApplication(application.id)
+                                }}>
                                     <td><img className="rounded-circle" src={application.appUser.picture} alt="activity-user"/>
                                     </td>
                                     <td>

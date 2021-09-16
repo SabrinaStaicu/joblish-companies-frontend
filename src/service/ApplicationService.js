@@ -19,6 +19,12 @@ class ApplicationService {
     getCompanyUniqueApplicants(id) {
         return axios.get(`${APPLICATION_API_URL}/company-unique-applications/${id}`, {headers: AuthHeader()});
     }
+
+    changeApplicationStatus(id, status) {
+        return axios.put(`${APPLICATION_API_URL}/update-status/${id}`, {
+            status : status,
+        }, {headers: AuthHeader()})
+    }
 }
 
 export default new ApplicationService;

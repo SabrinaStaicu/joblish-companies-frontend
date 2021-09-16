@@ -15,9 +15,13 @@ class UserService {
         return axios.get(`${USERS_API_URL}/search-user/${searchInput}/${openToWork}`, {headers: AuthHeader()})
     }
 
+    getUserById(id) {
+        return axios.get(`${USERS_API_URL}/${id}`, {headers: AuthHeader()})
+    }
+
     // usersByCompanyId(companyId) {
     //     return axios.get(`${USERS_API_URL}/applicants/${companyId}`, {headers: AuthHeader()})
     // }
 }
 
-export default new UserService;
+export default new UserService();
