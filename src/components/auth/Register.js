@@ -28,7 +28,7 @@ const Register = () => {
     return (
         <div>
             <Navbar />
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" style={{height: "800px"}}>
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>

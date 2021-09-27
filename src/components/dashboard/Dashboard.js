@@ -13,6 +13,7 @@ import {useHistory} from "react-router-dom";
 import {modalStyling} from "../../util/ModalStyling";
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import CompanyService from "../../service/CompanyService";
 
 Modal.setAppElement('#root');
 const Dashboard = (...rest) => {
@@ -20,12 +21,14 @@ const Dashboard = (...rest) => {
     const [companyApplicants, setCompanyApplicants] = useState([]);
     const [jobs, setJobs] = useState([]);
     const history = useHistory();
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [company, setCompany] = useState([]);
 
 
     useEffect(() =>{
         JobService.getAllByCompanyId(AuthService.getCurrentUser().id).then(res => setJobs(res.data))
         ApplicationService.getCompanyUniqueApplicants(AuthService.getCurrentUser().id).then(res => setCompanyApplicants(res.data))
+        CompanyService.getById(AuthService.getCurrentUser().id).then(res => setCompany(res.data))
     }, [])
 
  
@@ -41,7 +44,6 @@ const Dashboard = (...rest) => {
       history.push("/add-job")
     }
 
-
     return (
         <>
         <Navbar  />
@@ -55,19 +57,26 @@ const Dashboard = (...rest) => {
                     <div className="col-md-6 col-xl-4">
                         <div className="card">
                             <div className="card-block">
-                                <h6 className="mb-4">Employees</h6>
+                                {/*<h6 className="mb-4">{company.category}</h6>*/}
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>35</h3>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i
+                                            className="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{company.name}</h3>
                                     </div>
 
-                                    <div className="col-3 text-right">
-                                        <p className="m-b-0">50% Capacity</p>
-                                    </div>
-                                    <div className="progress" style={{height:"7px"}}>
-                                      <div className="progress-bar" role="progressbar" style={{width: `50%`, height:"7px", backgroundColor:"#1ed1aa"}}
-                                      aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+                                    {/*<div className="col-3 text-right">*/}
+                                    {/*    <p className="m-b-0">67%</p>*/}
+                                    {/*</div>*/}
+                                    <small>{company.description}</small>
+                                    {/*<div className="progress m-t-30" style={{height: "7px"}}>*/}
+                                    {/*    <div className="progress-bar progress-c-theme" role="progressbar" style={{*/}
+                                    {/*        width: "50%",*/}
+                                    {/*        ariaValuenow: "50",*/}
+                                    {/*        ariaValuemin: "0",*/}
+                                    {/*        ariaValuemax: "100",*/}
+                                    {/*        backgroundColor: "#1ed1aa"*/}
+                                    {/*    }}></div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
 
@@ -77,17 +86,20 @@ const Dashboard = (...rest) => {
                     <div className="col-md-6 col-xl-4">
                         <div className="card">
                             <div className="card-block">
-                                <h6 className="mb-4">Title</h6>
+                                <h6 className="mb-4">Employees</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>IDK</h3>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i
+                                            className="feather icon-arrow-up text-c-green f-30 m-r-10"></i>35</h3>
                                     </div>
 
                                     <div className="col-3 text-right">
-                                        <p className="m-b-0">67%</p>
+                                        <p className="m-b-0">50% Capacity</p>
                                     </div>
-                                    <div className="progress m-t-30" style={{height: "7px"}}>
-                                        <div className="progress-bar progress-c-theme" role="progressbar" style={{width: "50%", ariaValuenow:"50", ariaValuemin:"0", ariaValuemax:"100", backgroundColor:"#1ed1aa"}}></div>
+                                    <div className="progress" style={{height: "7px"}}>
+                                        <div className="progress-bar" role="progressbar"
+                                             style={{width: `50%`, height: "7px", backgroundColor: "#1ed1aa"}}
+                                             aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,63 +110,63 @@ const Dashboard = (...rest) => {
                     <div className="col-md-6 col-xl-4">
                         <div className="card">
                         <div class="card-block">
-                                            <div class="row align-items-center justify-content-center">
-                                                <div class="col">
-                                                    <h5 class="m-0">Jobs</h5>
-                                                </div>
-                                                <div onClick={openModal} class="col-auto">
-                                                    <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
-                                                </div>
-                                            </div>
-                                            <h6 class="text-muted mt-4 mb-0">List all the company jobs. </h6>
-                                            <i class="fab fa-angellist text-c-purple f-50"></i>
-                                        </div>
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col">
+                                        <h5 class="m-0">Jobs</h5>
+                                    </div>
+                                    <div onClick={openModal} class="col-auto">
+                                        <label style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">See jobs</label>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted mt-4 mb-0">List all the company jobs. </h6>
+                                <i class="fab fa-angellist text-c-purple f-50"></i>
+                            </div>
                         </div>
                     </div>
 
                     <CurrentApplications />
 
                     <div class="col-xl-4 col-md-6">
-                                    <div class="card card-event">
-                                        <div class="card-block">
-                                            <div class="row align-items-center justify-content-center">
-                                                <div class="col">
-                                                    <h5 class="m-0">List new job</h5>
-                                                </div>
-                                                <div class="col-auto" >
-                                                    <label onClick={addJob} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
-                                                </div>
-                                            </div>
-                                            <h2 class="mt-3 f-w-300"><sub class="text-muted f-14">{jobs.length} Jobs listed</sub></h2>
-                                            <h6 class="text-muted mt-4 mb-0">Fill out the form to list a new job! </h6>
-                                            <i class="fab fa-angellist text-c-purple f-50"></i>
-                                        </div>
+                        <div class="card card-event">
+                            <div class="card-block">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col">
+                                        <h5 class="m-0">List new job</h5>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-block border-bottom">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-auto">
-                                                    <i class="feather icon-zap f-30 text-c-green"></i>
-                                                </div>
-                                                <div class="col">
-                                                    <h3 class="f-w-300">{companyApplicants.length}</h3>
-                                                    <span class="d-block text-uppercase">TOTAL APPLICANT(S)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-block">
-                                            <div class="row d-flex align-items-center">
-                                                <div class="col-auto">
-                                                    <i><LocationOnOutlinedIcon fontSize="large"/></i>
-                                                </div>
-                                                <div class="col">
-                                                    <h3 class="f-w-300">26</h3>
-                                                    <span class="d-block text-uppercase">TOTAL LOCATIONS</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="col-auto" >
+                                        <label onClick={addJob} style={{cursor:"pointer"}} class="label theme-bg2 text-white f-14 f-w-400 float-right">List</label>
                                     </div>
                                 </div>
+                                <h2 class="mt-3 f-w-300"><sub class="text-muted f-14">{jobs.length} Jobs listed</sub></h2>
+                                <h6 class="text-muted mt-4 mb-0">Fill out the form to list a new job! </h6>
+                                <i class="fab fa-angellist text-c-purple f-50"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-block border-bottom">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i class="feather icon-zap f-30 text-c-green"></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">{companyApplicants.length}</h3>
+                                        <span class="d-block text-uppercase">TOTAL APPLICANT(S)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-auto">
+                                        <i><LocationOnOutlinedIcon fontSize="large"/></i>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="f-w-300">26</h3>
+                                        <span class="d-block text-uppercase">TOTAL LOCATIONS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
