@@ -4,7 +4,6 @@ import AuthService from '../service/AuthService'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-  // Add your own authentication on the below line.
   const isLoggedIn = AuthService.getCurrentUser()
 
   return (

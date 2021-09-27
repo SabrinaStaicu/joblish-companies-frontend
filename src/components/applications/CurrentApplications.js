@@ -22,7 +22,7 @@ const CurrentApplications = () => {
     }
 
     const seeApplication = (id) => {
-        ApplicationService.changeApplicationStatus(id, "Seen")
+        ApplicationService.changeApplicationStatus(id, "Seen");
     }
 
     const viewProfile = (application) => {

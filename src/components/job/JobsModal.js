@@ -32,7 +32,6 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
         } else {
             newSelectedCustomerIds = [];
         }
-
         setSelectedCustomerIds(newSelectedCustomerIds);
     };
 
@@ -59,7 +58,6 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
                 selectedCustomerIds.slice(selectedIndex + 1)
             );
         }
-
         setSelectedCustomerIds(newSelectedCustomerIds);
     };
 
@@ -70,8 +68,6 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
     const handlePageChange = (event, newPage) => {
         setPage(newPage);
     };
-
-    console.log(page)
 
     return (
         <Modal
@@ -179,7 +175,7 @@ const JobsModal = ({modalIsOpen, closeModal, modalStyling, rest, jobs}) => {
                 </PerfectScrollbar>
                 <TablePagination
                     component="div"
-                    count={jobs.length} //customers.length
+                    count={jobs.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}

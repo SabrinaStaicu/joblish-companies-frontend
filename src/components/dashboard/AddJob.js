@@ -9,17 +9,13 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
 import JobService from '../../service/JobService';
-import AuthService from '../../service/AuthService';
 import {useStyles} from "../../util/FormStyling";
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
 
-
 const AddJob = () => {
-    const location = useLocation();
+    useLocation();
     const classes = useStyles();
     const history = useHistory()
-
-    console.log(AuthService.getCurrentUser())
 
     const { register, handleSubmit, formState: {errors} } = useForm({});
 
@@ -34,7 +30,6 @@ const AddJob = () => {
                     </Typography>
                     <form className={classes.form} onSubmit={
                         handleSubmit((data) => {
-                            console.log(data)
                             JobService.addJob(data)
                             history.push("/dashboard")
                         })

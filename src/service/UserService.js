@@ -18,10 +18,6 @@ class UserService {
     getUserById(id) {
         return axios.get(`${USERS_API_URL}/${id}`, {headers: AuthHeader()})
     }
-
-    // usersByCompanyId(companyId) {
-    //     return axios.get(`${USERS_API_URL}/applicants/${companyId}`, {headers: AuthHeader()})
-    // }
 }
 
 export default new UserService();
