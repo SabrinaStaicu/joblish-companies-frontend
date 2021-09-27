@@ -37,8 +37,6 @@ class JobService {
             title : data.title,
         }, {headers: AuthHeader()})
     }
-
-
 }
 
 export default new JobService();

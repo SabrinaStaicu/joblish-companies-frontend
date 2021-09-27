@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import UserService from '../../service/UserService';
-import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
 
 export default function UserPageContent() {
-    const history = useHistory();
     const [user, setUser] = useState({})
     const [skills, setSkills] = useState([user.skills])
 
@@ -28,14 +25,6 @@ export default function UserPageContent() {
                         </div>
 
                 </div>
-                {/*<hr style={breakLine}/>*/}
-
-                {/*<div style={containerItem}>*/}
-                {/*    <div style={containerItemTitle}>Education:</div>*/}
-                {/*    <div>*/}
-                {/*        <CvContentList resumeData={userData.resume.education}/>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <hr className="break-line"/>
                 <div className="container-item">
                     <div style={{width: "20%"}}>Experience:</div>

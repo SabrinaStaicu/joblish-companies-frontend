@@ -1,15 +1,6 @@
 import SideBar from '../dashboard/SideBar'
-import { useState } from 'react';
 import Navbar from '../navigation/Navbar'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  TextField
-} from '@material-ui/core';
+import {Box, Button, Card, CardContent, CardHeader, Divider, TextField} from '@material-ui/core';
 import {useForm} from "react-hook-form";
 import CompanyService from "../../service/CompanyService";
 import AuthService from "../../service/AuthService";

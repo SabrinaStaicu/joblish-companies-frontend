@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import HomePage from "./HomePage";
 import Footer from "../navigation/Footer";
 import Dashboard from '../dashboard/Dashboard';
@@ -10,7 +10,6 @@ import Register from "../auth/Register";
 import EditJob from '../dashboard/EditJob';
 import AddJob from '../dashboard/AddJob';
 import PrivateRoute from '../../util/PrivateRoute';
-import UserDetails from '../user/UserDetails';
 import UserPage from '../user/UserPage';
 
 

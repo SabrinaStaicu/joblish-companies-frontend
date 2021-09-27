@@ -7,17 +7,12 @@ import {useLocation} from "react-router-dom";
 export default function UserPage() {
     const [user, setUser] = useState({});
     const location = useLocation();
-
     const id = location.state?.userId;
-
-    console.log(id)
 
     useEffect(() => {
         UserService.getUserById(id).then(res => {
             setUser(res.data)});
     },[])
-
-    console.log(user)
 
     return (
         <>

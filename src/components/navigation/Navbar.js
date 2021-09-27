@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 import logo from '../../images/logo.svg';
 import AuthService from "../../service/AuthService";
 
 const Navbar = ({homePosition }) => {
-    const history = useHistory();
     const [position, setPosition] = useState("static")
     const [stickyColor, setStickyColor] = useState("rgba(0, 0, 255, 0.534)")
     const [stickyBorder, setStickyBorder] = useState("transparent")
@@ -40,10 +39,6 @@ const Navbar = ({homePosition }) => {
         window.addEventListener('scroll', handleScroll)
     }, [])
 
-    // const logout = () => {
-    //     AuthService.logout();
-    //     history.push("/login")
-    // }
 
     return (
         <nav style={{backgroundColor:"" + stickyColor, position:"" + position, zIndex:"3", borderBottom: stickyBorder , animation:position === "sticky" ? "fadein 0.3s" : "none"}}>

@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import Navbar from '../navigation/Navbar';
 import {useStyles} from "../../util/FormStyling";
@@ -10,13 +9,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import {useForm} from "react-hook-form";
-import { ContactSupportOutlined } from '@material-ui/icons';
 import JobService from '../../service/JobService';
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
 
 
 const EditJob = () => {
-
     const location = useLocation();
     const classes = useStyles();
     const history = useHistory()
@@ -34,8 +31,6 @@ const EditJob = () => {
         salary: location.state.job?.salary,
         title: location.state.job?.title,
     });
-
-    console.log(location.state.job.date[1])
 
     const { register, handleSubmit, formState: {errors} } = useForm({
         defaultValues: preloadedValues
@@ -182,10 +177,6 @@ const EditJob = () => {
                                 />
                                 {errors.title && <span style={{color:"red"}}>Too short!</span>}
                             </Grid>
-                            {/*<Grid item xs={12}>*/}
-                            {/*    <label style={{marginRight: "10px"}}>Looking for a job</label>*/}
-                            {/*    <input name="lookingForJob" id="lookingForJob" {...register("lookingForJob")} type="checkbox"/>*/}
-                            {/*</Grid>*/}
                         </Grid>
                         <Button
                             type="submit"
