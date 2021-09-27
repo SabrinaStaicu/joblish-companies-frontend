@@ -1,13 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import { Card } from 'react-bootstrap';
 import UserPageContent from './UserPageContent';
 import Button from "@material-ui/core/Button";
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
-import {useForm} from "react-hook-form";
 import {useHistory} from "react-router-dom";
-import AuthService from "../../service/AuthService";
-import UserService from '../../service/UserService';
+
 
 export default function UserDetails({user}) {
 
@@ -30,17 +27,6 @@ export default function UserDetails({user}) {
         }
     }
 
-    const useEditStyles = makeStyles((theme) => ({
-        root: {
-          '& .MuiTextField-root': {
-            marginBottom : 20,
-            width: 100,
-          },
-        },
-      }));
-
-
-
     function openModal() {
         setIsOpen(true);
     }
@@ -50,24 +36,6 @@ export default function UserDetails({user}) {
         setEdit(false);
     }
 
-    const editHandler = () => {
-        if (edit === true) {
-            setEdit(false)
-            return;
-        }
-        setEdit(true)
-    }
-
-    const useStyles = makeStyles({
-        root: {
-            position:"absolute",
-            marginLeft:"52%",
-            zIndex:"0",
-        },
-        media: {
-            height: 140,
-        }, 
-    });
 
     console.log(user.picture)
 
