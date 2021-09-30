@@ -1,6 +1,6 @@
 <!-- TABLE OF CONTENTS -->
 
-# Joblish User Frontend
+# Joblish Companies Frontend
 
 <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
 <ol>
