@@ -43,24 +43,36 @@ const CurrentApplications = () => {
                         <table className="table table-hover">
                             <tbody>
                             {applications.length > 0 ? (
-                                applications.map(application => <tr className="unread" style={{cursor:"pointer"}} onClick={() => {
+                                applications.map(application => <tr className="unread" style={{cursor:"pointer"}} >
+                                    <td onClick={() => {
+                                    viewProfile(application)
+                                    seeApplication(application.id)
+                                }}><img className="rounded-circle" src={application.appUser.picture} alt="activity-user"/>
+                                    </td>
+                                    <td onClick={() => {
                                     viewProfile(application)
                                     seeApplication(application.id)
                                 }}>
-                                    <td><img className="rounded-circle" src={application.appUser.picture} alt="activity-user"/>
-                                    </td>
-                                    <td>
                                         <h6 className="mb-1">{application.appUser.firstName} {application.appUser.lastName}</h6>
                                         <p className="m-0">{application.notes?.length > 0 ? application.notes : "No notes."}</p>
                                     </td>
-                                    <td>
+                                    <td onClick={() => {
+                                    viewProfile(application)
+                                    seeApplication(application.id)
+                                }}>
                                         <h6 className="text-muted">{moment(application.date).format('DD/MM/YYYY')}
                                         </h6>
                                     </td>
-                                    <td>
+                                    <td onClick={() => {
+                                    viewProfile(application)
+                                    seeApplication(application.id)
+                                }}>
                                         <h6 className="text-muted">{application.job.title}</h6>
                                     </td>
-                                    <td>
+                                    <td onClick={() => {
+                                    viewProfile(application)
+                                    seeApplication(application.id)
+                                }}>
                                         <h6 className="text-muted">{application.status.replace("_", " ")}</h6>
                                     </td>
                                     <td><a href="#!" onClick={() => rejectApplication(application.id)} className="label theme-bg2 text-white f-12">Reject</a><a href="#!"
